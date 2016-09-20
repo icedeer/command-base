@@ -1,0 +1,20 @@
+<!-- an example of command definition configuration xml file -->
+<!-- each command should have a 'name' attribute and corresponding java class which implements AbstractAppCommand or AbstractXmlConfCommand java -->
+<CommandApplication name="csv2db">
+	<Command name="help" class="com.icedeer.common.cmd.ext.HelpCommand" index="3"/>
+	<Command name="createdb" class="com.icedeer.csv2db.CreateDBCommand" index="1">
+		<Option name="db" index="1" desc="DB table name" mandatory="true" hasValue="true"/>
+		<Option name="delete" index="2" desc="true - to truncate existing table" mandatory="false" hasValue="true">
+			<Value defaut="true">false</Value>
+			<Value>true</Value>
+		</Option>
+	</Command>
+	<Command name="addcsv" class="com.icedeer.csv2db.AddCsv2DBCommand" index="2">
+		<Option name="csv" index="1" desc="csv file name" mandatory="true" hasValue="true"/>
+		<Option name="db" index="2" desc="DB table name" mandatory="true" hasValue="true"/>
+		<Option name="clean" index="3" desc="true - to clean existing records" mandatory="false" hasValue="true">
+			<Value defaut="true">false</Value>
+			<Value>true</Value>
+		</Option>
+	</Command>
+</CommandApplication>
