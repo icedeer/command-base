@@ -12,6 +12,11 @@ package com.icedeer.common.cmd.ext;
  */
 public class ConfigurationException extends Exception {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2983237070106063004L;
+
     public ConfigurationException() {
         super();
     }

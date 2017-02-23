@@ -1,0 +1,10 @@
+<CommandApplication name="demoApp">
+	<Command name="help" class="com.icedeer.common.cmd.ext.HelpCommand" index="2"/>
+	<Command name="hello" class="com.icedeer.common.cmd.demo.HelloCommand" index="1">
+		<Option name="name" index="1" desc="You name" mandatory="true" hasValue="true"/>
+		<Option name="country" index="2" desc="from which country" mandatory="false" hasValue="true">
+			<Value defaut="true">Canada</Value>
+			<Value>US</Value>
+		</Option>
+	</Command>
+</CommandApplication>

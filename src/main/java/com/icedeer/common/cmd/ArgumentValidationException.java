@@ -59,6 +59,8 @@ public class ArgumentValidationException extends Exception {
 			return "Invalid Option : \"" + values[0] + "\" is not valid option for command [" + values[1] + "]";
 		case REQUIRE_OPTION_VALUE:
 			return "Invalid Option Value: require input for option \"" + values[0] + "\"";
+        case MINIMUM_LENGTH_NAME:
+            return "Invalid Arguments : [" + values[0] + "] requires mininum length of 2 characters";
 		}
 		return null;
 	}
