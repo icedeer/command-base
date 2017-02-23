@@ -41,15 +41,15 @@ The basic design and features include:
   argsDef.addOption("createdb", "db", 1, true, true);
   argsDef.addOption("createdb", "delete", 2, false, true, "false");
   ```
-* the tool will render out Command-line Usage (similar like help command does) basic on the command definition given above; no manual work here.
-  ```
-  demoApp Usage :
+* the tool will render out Command-line Usage (similar like help command does) basic on the command definition given above; no additional manual work here. The usage of above sample will look like below:
 
-  -hello         -name <You name>
-                 [-country <Canada|US>]
+  ```
+  csv2db Usage :
+
+  -createdb      -db <DB table name>
+               [-delete <false|true>]
 
   -help
-
   ```
 
 * while command-line arguments been parsed by the tool, it will do the basic validation (like required option, option with value should expect the value, etc); user can define additional customized validation rule by overwritten `Command.setAndValidateCommandOptions(CommandOption cmdOption)` method
@@ -60,7 +60,6 @@ The basic design and features include:
 ***
 ## How to start?
 1) define a XML named `command_def.xml` with detail on what command (with its binding java class) and its options, for example, below XML defines two commands (`-help`) and (`-hello`); `help` is a built-in command, so no need to implement it; and `hello` will take two options: "name" which is mandatory option and "country" is optional option.
-<code>
   ```xml
   <CommandApplication name="demoApp">
     <Command name="help" class="com.icedeer.common.cmd.ext.HelpCommand" index="2"/>
@@ -74,24 +73,24 @@ The basic design and features include:
   </CommandApplication>
   ```
 2) create a java class of `com.icedeer.common.cmd.demo.HelloCommand` which looks like below:
-```java
-public class HelloCommand extends AbstractXmlConfCommand{
+   ```java
+    public class HelloCommand extends AbstractXmlConfCommand{
 
-    public HelloCommand(String name) {
-        super(name);
+        public HelloCommand(String name) {
+            super(name);
+        }
+
+        public void execute() throws Exception {
+            String name = getCommandOption().getOptionValue("name");
+            String country = getCommandOption().getOptionValue("country");
+
+            logger.info("Your name is [{}] and your country is [{}]", name, country);
+
+            System.out.println("Hello "+name +country == null ?"": " from "+country);
+
+        }
     }
-
-    public void execute() throws Exception {
-        String name = getCommandOption().getOptionValue("name");
-        String country = getCommandOption().getOptionValue("country");
-
-        logger.info("Your name is [{}] and your country is [{}]", name, country);
-
-        System.out.println("Hello "+name +country == null ?"": " from "+country);
-
-    }
-}
-```
+    ```
 3) run tool with main class of `com.icedeer.common.cmd.ext.XmlConfGenericApp` (you can extends this class with your implementation)
 ```java
   XmlConfGenericApp app = new XmlConfGenericApp();
@@ -108,3 +107,12 @@ public class HelloCommand extends AbstractXmlConfCommand{
       assert(false);
   }
 ```
+  The command line usage will show something like below:
+  ```
+  demoApp Usage :
+
+  -hello         -name <You name>
+                 [-country <Canada|US>]
+
+  -help
+  ```
